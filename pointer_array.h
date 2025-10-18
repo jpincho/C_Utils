@@ -5,10 +5,10 @@
 
 BEGIN_C_DECLARATIONS
 typedef struct
-	{
-	intptr_t *data;
-	unsigned count, capacity;
-	}pointer_array;
+    {
+    intptr_t *data;
+    unsigned count, capacity;
+    } pointer_array;
 
 void pointer_array_init ( pointer_array *array );
 void pointer_array_destroy ( pointer_array *array );

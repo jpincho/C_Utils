@@ -9,17 +9,17 @@ typedef struct pointer_list_node pointer_list_node;
 typedef struct pointer_list pointer_list;
 
 typedef struct pointer_list_node
-	{
-	pointer_list *owner;
-	void *data;
-	pointer_list_node *next, *previous;
-	}pointer_list_node;
+    {
+    pointer_list *owner;
+    void *data;
+    pointer_list_node *next, *previous;
+    } pointer_list_node;
 
 typedef struct pointer_list
-	{
-	pointer_list_node *first, *last;
-	unsigned count;
-	}pointer_list;
+    {
+    pointer_list_node *first, *last;
+    unsigned count;
+    } pointer_list;
 
 void pointer_list_init ( pointer_list *list );
 void pointer_list_destroy ( pointer_list *list );
