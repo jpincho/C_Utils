@@ -1,8 +1,8 @@
-#include "array_utils.h"
+#include "ArrayUtils.h"
 #include <stdlib.h>
 #include <memory.h>
 
-bool array_resize(void **array, const unsigned used, unsigned *capacity, const unsigned element_size, const unsigned desired_capacity, const bool clear)
+bool Array_Resize(void **array, const unsigned used, unsigned *capacity, const unsigned element_size, const unsigned desired_capacity, const bool clear)
 	{
 	if (*capacity == desired_capacity)
 		return true;
@@ -20,7 +20,7 @@ bool array_resize(void **array, const unsigned used, unsigned *capacity, const u
 	return true;
 	}
 
-bool array_ensure_free_space(void **array, const unsigned used, unsigned *capacity, const unsigned element_size, const unsigned desired_free_space, const bool clear)
+bool Array_EnsureFreeSpace(void **array, const unsigned used, unsigned *capacity, const unsigned element_size, const unsigned desired_free_space, const bool clear)
 	{
 	// If I already have enough free space, return
 	if (*capacity >= used + desired_free_space)
@@ -28,5 +28,5 @@ bool array_ensure_free_space(void **array, const unsigned used, unsigned *capaci
 
 	// Calculate new capacity and realloc
 	unsigned new_capacity = used + desired_free_space;
-	return array_resize(array, used, capacity, element_size, new_capacity, clear);
+	return Array_Resize(array, used, capacity, element_size, new_capacity, clear);
 	}
