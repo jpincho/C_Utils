@@ -30,3 +30,19 @@ bool Array_EnsureFreeSpace(void **array, const unsigned used, unsigned *capacity
 	unsigned new_capacity = used + desired_free_space;
 	return Array_Resize(array, used, capacity, element_size, new_capacity, clear);
 	}
+
+void Array_Clear(void **array, unsigned *used, unsigned *capacity, const unsigned element_size, const bool clear)
+	{
+	if (clear)
+		memset(*array, 0, element_size * *capacity);
+	*used = 0;
+	}
+
+void Array_Free(void **array, unsigned *used, unsigned *capacity)
+	{
+	if (*array)
+		free(*array);
+	*array = NULL;
+	*used = 0;
+	*capacity = 0;
+	}
