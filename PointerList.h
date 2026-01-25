@@ -5,38 +5,38 @@
 
 BEGIN_C_DECLARATIONS
 
-typedef struct pointer_list_node pointer_list_node;
+typedef struct PointerListNode PointerListNode;
 typedef struct PointerList PointerList;
 
-typedef struct pointer_list_node
+typedef struct PointerListNode
 	{
 	PointerList *owner;
 	void *data;
-	pointer_list_node *next, *previous;
-	} pointer_list_node;
+	PointerListNode *next, *previous;
+	} PointerListNode;
 
 typedef struct PointerList
 	{
-	pointer_list_node *first, *last;
+	PointerListNode *first, *last;
 	unsigned count;
 	} PointerList;
 
 void PointerList_Initialize ( PointerList *list );
 void PointerList_Destroy ( PointerList *list );
-pointer_list_node *PointerList_AddAtEnd ( PointerList *list, const void *data );
-pointer_list_node *PointerList_InsertAfter ( PointerList *list, pointer_list_node *node, const void *data );
-pointer_list_node *PointerList_InsertBefore ( PointerList *list, pointer_list_node *node, const void *data );
-void PointerList_DestroyNode ( PointerList *list, pointer_list_node *node );
+PointerListNode *PointerList_AddAtEnd ( PointerList *list, const void *data );
+PointerListNode *PointerList_InsertAfter ( PointerList *list, PointerListNode *node, const void *data );
+PointerListNode *PointerList_InsertBefore ( PointerList *list, PointerListNode *node, const void *data );
+void PointerList_DestroyNode ( PointerList *list, PointerListNode *node );
 
 bool PointerList_IsEmpty ( const PointerList *list );
 unsigned PointerList_GetSize ( const PointerList *list );
 void PointerList_Clear ( PointerList *list );
-void *PointerList_GetNodeData ( const pointer_list_node *node );
+void *PointerList_GetNodeData ( const PointerListNode *node );
 
-pointer_list_node *PointerList_Find ( const PointerList *list, pointer_list_node *start, const void *data );
-pointer_list_node *PointerList_GetFirst ( const PointerList *list );
-pointer_list_node *PointerList_GetLast ( const PointerList *list );
-pointer_list_node *PointerList_GetNextNode ( const pointer_list_node *node );
-pointer_list_node *PointerList_GetPreviousNode ( const pointer_list_node *node );
+PointerListNode *PointerList_Find ( const PointerList *list, PointerListNode *start, const void *data );
+PointerListNode *PointerList_GetFirst ( const PointerList *list );
+PointerListNode *PointerList_GetLast ( const PointerList *list );
+PointerListNode *PointerList_GetNextNode ( const PointerListNode *node );
+PointerListNode *PointerList_GetPreviousNode ( const PointerListNode *node );
 
 END_C_DECLARATIONS
