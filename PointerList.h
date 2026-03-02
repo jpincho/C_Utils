@@ -11,7 +11,7 @@ typedef struct PointerList PointerList;
 typedef struct PointerListNode
 	{
 	PointerList *owner;
-	void *data;
+    	const void *data;
 	PointerListNode *next, *previous;
 	} PointerListNode;
 
@@ -31,7 +31,7 @@ void PointerList_DestroyNode ( PointerList *list, PointerListNode *node );
 bool PointerList_IsEmpty ( const PointerList *list );
 unsigned PointerList_GetSize ( const PointerList *list );
 void PointerList_Clear ( PointerList *list );
-void *PointerList_GetNodeData ( const PointerListNode *node );
+const void *PointerList_GetNodeData ( const PointerListNode *node );
 
 PointerListNode *PointerList_Find ( const PointerList *list, PointerListNode *start, const void *data );
 PointerListNode *PointerList_GetFirst ( const PointerList *list );

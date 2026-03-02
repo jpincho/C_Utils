@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include <Platform/Platform.h>
+#if defined ( PLATFORM_COMPILER_GCC)
+#include <string.h>
+#endif
+
 void PointerArray_Initialize ( PointerArray *array )
 	{
 	array->capacity = array->count = 0;

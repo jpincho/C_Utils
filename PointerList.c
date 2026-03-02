@@ -15,7 +15,7 @@ void PointerList_Destroy ( PointerList *list )
 	free ( list );
 	}
 
-PointerListNode *PointerList_AddAtEnd ( PointerList *list, void *data )
+PointerListNode *PointerList_AddAtEnd ( PointerList *list, const void *data )
 	{
 	PointerListNode *new_node = calloc ( 1, sizeof ( PointerListNode ) );
 	if ( new_node == NULL )
@@ -39,7 +39,7 @@ PointerListNode *PointerList_AddAtEnd ( PointerList *list, void *data )
 	return new_node;
 	}
 
-PointerListNode *PointerList_InsertAfter ( PointerList *list, PointerListNode *node, void *data )
+PointerListNode *PointerList_InsertAfter ( PointerList *list, PointerListNode *node, const void *data )
 	{
 	// In case the list is empty, <node> parameter can be null
 	if ( node == NULL )
@@ -73,7 +73,7 @@ PointerListNode *PointerList_InsertAfter ( PointerList *list, PointerListNode *n
 	return new_node;
 	}
 
-PointerListNode *PointerList_InsertBefore ( PointerList *list, PointerListNode *node, void *data )
+PointerListNode *PointerList_InsertBefore ( PointerList *list, PointerListNode *node, const void *data )
 	{
 	// In case the list is empty, <node> parameter can be null
 	if ( node == NULL )
@@ -148,7 +148,7 @@ void PointerList_Clear ( PointerList *list )
 	list->count = 0;
 	}
 
-void *PointerList_GetNodeData ( const PointerListNode *node )
+const void *PointerList_GetNodeData ( const PointerListNode *node )
 	{
 	return node->data;
 	}
