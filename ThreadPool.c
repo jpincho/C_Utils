@@ -49,7 +49,7 @@ static TaskData *PopTaskFromQueue ( ThreadPool *pool )
 	TaskData *current_task = NULL;
 	if ( first_node != NULL )
 		{
-                current_task = ( TaskData* ) PointerList_GetNodeData ( first_node );
+		current_task = ( TaskData* ) PointerList_GetNodeData ( first_node );
 		PointerList_DestroyNode ( &pool->task_list, first_node );
 		}
 	mtx_unlock ( &pool->task_list_mutex );
@@ -98,51 +98,51 @@ ThreadPool *ThreadPool_Create ( void )
 
 	PointerList_Initialize ( &pool->task_list );
 	pool->last_task_id = -1;
-        if ( mtx_init ( &pool->task_list_mutex, mtx_plain ) != thrd_success )
-                return NULL;
-        if ( cnd_init ( &pool->wake_up ) != thrd_success )
-                {
-                mtx_destroy ( &pool->task_list_mutex );
-                return NULL;
-                }
-        if ( mtx_init ( &pool->wake_up_mutex, mtx_plain ) != thrd_success )
-                {
-                mtx_destroy ( &pool->task_list_mutex );
-                cnd_destroy ( &pool->wake_up );
-                return NULL;
-                }
-        if ( cnd_init ( &pool->task_finished ) != thrd_success )
-                {
-                mtx_destroy ( &pool->task_list_mutex );
-                cnd_destroy ( &pool->wake_up );
-                mtx_destroy ( &pool->wake_up_mutex );
-                return NULL;
-                }
-        if ( mtx_init ( &pool->task_finished_mutex, mtx_recursive ) != thrd_success )
-                {
-                mtx_destroy ( &pool->task_list_mutex );
-                cnd_destroy ( &pool->task_finished );
-                cnd_destroy ( &pool->wake_up );
-                mtx_destroy ( &pool->wake_up_mutex );
-                return NULL;
-                }
-        pool->thread_count = 8;
+	if ( mtx_init ( &pool->task_list_mutex, mtx_plain ) != thrd_success )
+		return NULL;
+	if ( cnd_init ( &pool->wake_up ) != thrd_success )
+		{
+		mtx_destroy ( &pool->task_list_mutex );
+		return NULL;
+		}
+	if ( mtx_init ( &pool->wake_up_mutex, mtx_plain ) != thrd_success )
+		{
+		mtx_destroy ( &pool->task_list_mutex );
+		cnd_destroy ( &pool->wake_up );
+		return NULL;
+		}
+	if ( cnd_init ( &pool->task_finished ) != thrd_success )
+		{
+		mtx_destroy ( &pool->task_list_mutex );
+		cnd_destroy ( &pool->wake_up );
+		mtx_destroy ( &pool->wake_up_mutex );
+		return NULL;
+		}
+	if ( mtx_init ( &pool->task_finished_mutex, mtx_recursive ) != thrd_success )
+		{
+		mtx_destroy ( &pool->task_list_mutex );
+		cnd_destroy ( &pool->task_finished );
+		cnd_destroy ( &pool->wake_up );
+		mtx_destroy ( &pool->wake_up_mutex );
+		return NULL;
+		}
+	pool->thread_count = 8;
 	pool->free_threads = pool->thread_count;
 	pool->quitting = false;
 	pool->threads = calloc ( pool->thread_count, sizeof ( thrd_t ) );
 	if ( pool->threads == NULL )
-                {
-                cnd_destroy ( &pool->task_finished );
-                mtx_destroy ( &pool->task_finished_mutex );
-                cnd_destroy ( &pool->wake_up );
-                mtx_destroy ( &pool->wake_up_mutex );
+		{
+		cnd_destroy ( &pool->task_finished );
+		mtx_destroy ( &pool->task_finished_mutex );
+		cnd_destroy ( &pool->wake_up );
+		mtx_destroy ( &pool->wake_up_mutex );
 
-                free ( pool );
-                return NULL;
-                }
+		free ( pool );
+		return NULL;
+		}
 	for ( unsigned index = 0; index < pool->thread_count; ++index )
 		{
-                thrd_create ( &pool->threads[index], ( thrd_start_t ) ThreadPool_LoopFunction, pool );
+		thrd_create ( &pool->threads[index], ( thrd_start_t ) ThreadPool_LoopFunction, pool );
 		}
 	return pool;
 	}
@@ -208,7 +208,7 @@ void ThreadPool_CancelTask ( ThreadPool *pool, int task_id )
 	mtx_lock ( &pool->task_list_mutex );
 	for ( PointerListNode *iterator = PointerList_GetFirst ( &pool->task_list ); iterator != NULL; iterator = PointerList_GetNextNode ( iterator ) )
 		{
-                TaskData *task_pointer = ( TaskData* ) PointerList_GetNodeData ( iterator );
+		TaskData *task_pointer = ( TaskData* ) PointerList_GetNodeData ( iterator );
 		if ( task_pointer->task_id == task_id )
 			{
 			free ( task_pointer );
@@ -228,7 +228,7 @@ void ThreadPool_CancelAll ( ThreadPool *pool )
 	mtx_lock ( &pool->task_list_mutex );
 	for ( PointerListNode *iterator = PointerList_GetFirst ( &pool->task_list ); iterator != NULL; iterator = PointerList_GetNextNode ( iterator ) )
 		{
-                TaskData *task_pointer = ( TaskData* ) PointerList_GetNodeData ( iterator );
+		TaskData *task_pointer = ( TaskData* ) PointerList_GetNodeData ( iterator );
 		free ( task_pointer );
 		}
 	PointerList_Clear ( &pool->task_list );
@@ -248,7 +248,7 @@ bool ThreadPool_IsTaskQueued ( ThreadPool *pool, int task_id )
 	mtx_lock ( &pool->task_list_mutex );
 	for ( PointerListNode *iterator = PointerList_GetFirst ( &pool->task_list ); iterator != NULL; iterator = PointerList_GetNextNode ( iterator ) )
 		{
-                TaskData *task_pointer = ( TaskData* ) PointerList_GetNodeData ( iterator );
+		TaskData *task_pointer = ( TaskData* ) PointerList_GetNodeData ( iterator );
 		if ( task_pointer->task_id == task_id )
 			{
 			selected_task = task_pointer;

@@ -11,7 +11,7 @@ typedef struct PointerList PointerList;
 typedef struct PointerListNode
 	{
 	PointerList *owner;
-    	const void *data;
+	const void *data;
 	PointerListNode *next, *previous;
 	} PointerListNode;
 
