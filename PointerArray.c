@@ -3,7 +3,7 @@
 #include <assert.h>
 
 #include <Platform/Platform.h>
-#if defined ( PLATFORM_COMPILER_GCC)
+#if defined ( PLATFORM_COMPILER_GNU)
 #include <string.h>
 #endif
 
