@@ -3,5 +3,7 @@ project ("C_Utils")
 
 file ( GLOB SOURCES "*.c" "*.h" )
 add_library ( C_Utils ${SOURCES} )
+target_link_libraries ( C_Utils PUBLIC Platform )
+
 #include_directories ( ${CMAKE_CURRENT_LIST_DIR} )
 set_target_properties ( C_Utils PROPERTIES C_STANDARD 11 )
