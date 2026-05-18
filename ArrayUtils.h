@@ -5,6 +5,8 @@ bool Array_Resize ( void **array, const unsigned Used, unsigned *Capacity, const
 bool Array_EnsureFreeSpace ( void **array, const unsigned Used, unsigned *Capacity, const unsigned element_size, const unsigned desired_free_space, const bool clear );
 void Array_Clear ( void **array, unsigned *Used, unsigned *Capacity, const unsigned element_size, const bool clear );
 void Array_Free ( void **array, unsigned *Used, unsigned *Capacity );
+bool Memory_ReallocAndClear ( void **Pointer, const unsigned CurrentSize, const unsigned NewSize );
+bool Memory_Realloc ( void **Pointer, const unsigned NewSize );
 
 #define ARRAY_RESIZE(ARRAY,USED,CAPACITY,DESIRED) Array_Resize((void**)&ARRAY,USED,&CAPACITY,sizeof(ARRAY[0]),DESIRED,true)
 #define ARRAY_ENSURE_FREE_SPACE(ARRAY,USED,CAPACITY,DESIRED) Array_EnsureFreeSpace((void**)&ARRAY,USED,&CAPACITY,sizeof(ARRAY[0]),DESIRED,true)

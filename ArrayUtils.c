@@ -46,3 +46,27 @@ void Array_Free ( void **array, unsigned *used, unsigned *capacity )
 	*used = 0;
 	*capacity = 0;
 	}
+
+bool Memory_ReallocAndClear ( void **Pointer, const unsigned CurrentSize, const unsigned NewSize )
+	{
+	if ( CurrentSize == NewSize )
+		return true;
+
+	void *NewPointer = realloc ( *Pointer, NewSize );
+	if ( NewPointer == NULL )
+		return false;
+	*Pointer = NewPointer;
+	// Clears the new area
+	if ( NewSize > CurrentSize )
+		memset ( ( char * ) * Pointer + CurrentSize, 0, NewSize - CurrentSize );
+	return true;
+	}
+
+bool Memory_Realloc ( void **Pointer, const unsigned NewSize )
+	{
+	void *NewPointer = realloc ( *Pointer, NewSize );
+	if ( NewPointer == NULL )
+		return false;
+	*Pointer = NewPointer;
+	return true;
+	}
