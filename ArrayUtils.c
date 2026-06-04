@@ -2,49 +2,70 @@
 #include <stdlib.h>
 #include <memory.h>
 
-bool Array_Resize ( void **array, const unsigned used, unsigned *capacity, const unsigned element_size, const unsigned desired_capacity, const bool clear )
+bool Array_Resize ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned DesiredCapacity, const bool Clear )
 	{
-	if ( *capacity == desired_capacity )
+	if ( *Capacity == DesiredCapacity )
 		return true;
-	if ( used > desired_capacity )
+	if ( Used > DesiredCapacity )
 		return false;
 
-	void *new_pointer = realloc ( *array, desired_capacity * element_size );
-	if ( new_pointer == NULL )
-		return false;
-	*array = new_pointer;
-	// Clears the new area, if needed
-	if ( ( clear ) && ( desired_capacity > *capacity ) )
-		memset ( ( char * ) * array + ( *capacity * element_size ), 0, element_size * ( desired_capacity - *capacity ) );
-	*capacity = desired_capacity;
+	if ( Clear )
+		{
+		if ( Memory_ReallocAndClear ( ArrayPointer, *Capacity * ElementSize, DesiredCapacity * ElementSize ) == false )
+			return false;
+		}
+	else
+		{
+		if ( Memory_Realloc ( ArrayPointer, DesiredCapacity * ElementSize ) == false )
+			return false;
+		}
+	*Capacity = DesiredCapacity;
 	return true;
 	}
 
-bool Array_EnsureFreeSpace ( void **array, const unsigned used, unsigned *capacity, const unsigned element_size, const unsigned desired_free_space, const bool clear )
+bool Array_EnsureFreeSpace ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned desired_free_space, const bool Clear )
 	{
 	// If I already have enough free space, return
-	if ( *capacity >= used + desired_free_space )
+	if ( *Capacity >= Used + desired_free_space )
 		return true;
 
-	// Calculate new capacity and realloc
-	unsigned new_capacity = used + desired_free_space;
-	return Array_Resize ( array, used, capacity, element_size, new_capacity, clear );
+	// Calculate new Capacity and realloc
+	unsigned NewCapacity = Used + desired_free_space;
+	return Array_Resize ( ArrayPointer, Used, Capacity, ElementSize, NewCapacity, Clear );
 	}
 
-void Array_Clear ( void **array, unsigned *used, unsigned *capacity, const unsigned element_size, const bool clear )
+bool Array_DeleteAndShift ( void **ArrayPointer, const unsigned IndexToDelete, const unsigned *Used, const unsigned ElementSize )
 	{
-	if ( clear )
-		memset ( *array, 0, element_size * *capacity );
-	*used = 0;
+	if ( IndexToDelete >= *Used )
+		return false;
+	memmove ( ( char * ) * ArrayPointer + ( IndexToDelete * ElementSize ), ( char * ) * ArrayPointer + ( ( IndexToDelete + 1 ) * ElementSize ), ( *Used - IndexToDelete - 1 ) * ElementSize );
+	--Used;
+	return true;
 	}
 
-void Array_Free ( void **array, unsigned *used, unsigned *capacity )
+bool Array_DeleteAndSwap ( void **ArrayPointer, const unsigned IndexToDelete, const unsigned *Used, const unsigned ElementSize )
 	{
-	if ( *array )
-		free ( *array );
-	*array = NULL;
-	*used = 0;
-	*capacity = 0;
+	if ( IndexToDelete >= *Used )
+		return false;
+	memcpy ( ( char * ) * ArrayPointer + ( IndexToDelete * ElementSize ), ( char * ) * ArrayPointer + ( ( *Used - 1 ) * ElementSize ), ElementSize );
+	--Used;
+	return true;
+	}
+
+void Array_Clear ( void **ArrayPointer, unsigned *Used, unsigned *Capacity, const unsigned ElementSize, const bool Clear )
+	{
+	if ( Clear )
+		memset ( *ArrayPointer, 0, ElementSize * *Capacity );
+	*Used = 0;
+	}
+
+void Array_Free ( void **ArrayPointer, unsigned *Used, unsigned *Capacity )
+	{
+	if ( *ArrayPointer )
+		free ( *ArrayPointer );
+	*ArrayPointer = NULL;
+	*Used = 0;
+	*Capacity = 0;
 	}
 
 bool Memory_ReallocAndClear ( void **Pointer, const unsigned CurrentSize, const unsigned NewSize )

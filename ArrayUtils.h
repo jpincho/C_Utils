@@ -1,10 +1,12 @@
 #pragma once
 #include <stdbool.h>
 
-bool Array_Resize ( void **array, const unsigned Used, unsigned *Capacity, const unsigned element_size, const unsigned desired_capacity, const bool clear );
-bool Array_EnsureFreeSpace ( void **array, const unsigned Used, unsigned *Capacity, const unsigned element_size, const unsigned desired_free_space, const bool clear );
-void Array_Clear ( void **array, unsigned *Used, unsigned *Capacity, const unsigned element_size, const bool clear );
-void Array_Free ( void **array, unsigned *Used, unsigned *Capacity );
+bool Array_Resize ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned desired_capacity, const bool clear );
+bool Array_EnsureFreeSpace ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned desired_free_space, const bool clear );
+bool Array_DeleteAndShift( void **ArrayPointer, const unsigned IndexToDelete, const unsigned *Used, const unsigned ElementSize );
+bool Array_DeleteAndSwap( void **ArrayPointer, const unsigned IndexToDelete, const unsigned *Used, const unsigned ElementSize );
+void Array_Clear ( void **ArrayPointer, unsigned *Used, unsigned *Capacity, const unsigned ElementSize, const bool clear );
+void Array_Free ( void **ArrayPointer, unsigned *Used, unsigned *Capacity );
 bool Memory_ReallocAndClear ( void **Pointer, const unsigned CurrentSize, const unsigned NewSize );
 bool Memory_Realloc ( void **Pointer, const unsigned NewSize );
 
