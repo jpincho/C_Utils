@@ -23,32 +23,32 @@ bool Array_Resize ( void **ArrayPointer, const unsigned Used, unsigned *Capacity
 	return true;
 	}
 
-bool Array_EnsureFreeSpace ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned desired_free_space, const bool Clear )
+bool Array_EnsureFreeSpace ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned DesiredFreeSpace, const bool Clear )
 	{
 	// If I already have enough free space, return
-	if ( *Capacity >= Used + desired_free_space )
+	if ( *Capacity >= Used + DesiredFreeSpace )
 		return true;
 
 	// Calculate new Capacity and realloc
-	unsigned NewCapacity = Used + desired_free_space;
+	unsigned NewCapacity = Used + DesiredFreeSpace;
 	return Array_Resize ( ArrayPointer, Used, Capacity, ElementSize, NewCapacity, Clear );
 	}
 
-bool Array_DeleteAndShift ( void **ArrayPointer, const unsigned IndexToDelete, const unsigned *Used, const unsigned ElementSize )
+bool Array_DeleteAndShift ( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize )
 	{
 	if ( IndexToDelete >= *Used )
 		return false;
 	memmove ( ( char * ) * ArrayPointer + ( IndexToDelete * ElementSize ), ( char * ) * ArrayPointer + ( ( IndexToDelete + 1 ) * ElementSize ), ( *Used - IndexToDelete - 1 ) * ElementSize );
-	--Used;
+	-- ( *Used );
 	return true;
 	}
 
-bool Array_DeleteAndSwap ( void **ArrayPointer, const unsigned IndexToDelete, const unsigned *Used, const unsigned ElementSize )
+bool Array_DeleteAndSwap ( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize )
 	{
 	if ( IndexToDelete >= *Used )
 		return false;
 	memcpy ( ( char * ) * ArrayPointer + ( IndexToDelete * ElementSize ), ( char * ) * ArrayPointer + ( ( *Used - 1 ) * ElementSize ), ElementSize );
-	--Used;
+	-- ( *Used );
 	return true;
 	}
 

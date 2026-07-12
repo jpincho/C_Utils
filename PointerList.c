@@ -150,6 +150,16 @@ void PointerList_Clear ( PointerList *list )
 
 const void *PointerList_GetNodeData ( const PointerListNode *node )
 	{
+		#define PLATFORM_DEBUG 1
+#if defined (PLATFORM_DEBUG)
+	assert ( node->owner != NULL );
+	for ( PointerListNode *iterator = node->owner->first; iterator != NULL; iterator = iterator->next )
+		{
+		if ( iterator == node )
+			return node->data;
+		}
+	assert( false && "Node does not belong to the list" );
+#endif
 	return node->data;
 	}
 
