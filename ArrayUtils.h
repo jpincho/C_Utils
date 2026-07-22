@@ -3,8 +3,8 @@
 
 bool Array_Resize ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned desired_capacity, const bool clear );
 bool Array_EnsureFreeSpace ( void **ArrayPointer, const unsigned Used, unsigned *Capacity, const unsigned ElementSize, const unsigned DesiredFreeSpace, const bool clear );
-bool Array_DeleteAndShift( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize );
-bool Array_DeleteAndSwap( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize );
+bool Array_DeleteAndShift ( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize );
+bool Array_DeleteAndSwap ( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize );
 void Array_Clear ( void **ArrayPointer, unsigned *Used, unsigned *Capacity, const unsigned ElementSize, const bool clear );
 void Array_Free ( void **ArrayPointer, unsigned *Used, unsigned *Capacity );
 bool Memory_ReallocAndClear ( void **Pointer, const unsigned CurrentSize, const unsigned NewSize );
