@@ -34,7 +34,7 @@ bool Array_EnsureFreeSpace ( void **ArrayPointer, const unsigned Used, unsigned 
 	return Array_Resize ( ArrayPointer, Used, Capacity, ElementSize, NewCapacity, Clear );
 	}
 
-bool Array_DeleteAndShift ( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize )
+bool Array_DeleteAndShift ( void **ArrayPointer, unsigned *Used, const unsigned ElementSize, const unsigned IndexToDelete )
 	{
 	if ( IndexToDelete >= *Used )
 		return false;
@@ -43,7 +43,7 @@ bool Array_DeleteAndShift ( void **ArrayPointer, const unsigned IndexToDelete, u
 	return true;
 	}
 
-bool Array_DeleteAndSwap ( void **ArrayPointer, const unsigned IndexToDelete, unsigned *Used, const unsigned ElementSize )
+bool Array_DeleteAndSwap ( void **ArrayPointer, unsigned *Used, const unsigned ElementSize, const unsigned IndexToDelete )
 	{
 	if ( IndexToDelete >= *Used )
 		return false;
